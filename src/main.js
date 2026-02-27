@@ -182,28 +182,31 @@ async function handleCliArgs() {
   }
 }
 
-// Try resolving argv directly via Tauri event
-async function checkArgv() {
+// Handle drag-and-drop via Tauri v2 webview API
+async function setupDragDrop() {
   try {
-    // In Tauri v2, file associations pass the path as the second argv
-    // We can listen for the file-drop or check process args
-    const onFileDropEvent = window.__TAURI__.event;
-    if (onFileDropEvent) {
-      onFileDropEvent.listen("tauri://file-drop", async (event) => {
-        const files = event.payload.paths || event.payload;
-        if (Array.isArray(files) && files.length > 0) {
-          const pdfFile = files.find((f) => f.toLowerCase().endsWith(".pdf"));
-          if (pdfFile) await openPdf(pdfFile);
-        }
-      });
-    }
+    const webview = window.__TAURI__.webview.getCurrentWebview();
+    await webview.onDragDropEvent(async (event) => {
+      const { type } = event.payload;
+      if (type === "enter" || type === "over") {
+        document.body.classList.add("drag-hover");
+      } else if (type === "leave") {
+        document.body.classList.remove("drag-hover");
+      } else if (type === "drop") {
+        document.body.classList.remove("drag-hover");
+        const pdfFile = event.payload.paths.find((f) =>
+          f.toLowerCase().endsWith(".pdf")
+        );
+        if (pdfFile) await openPdf(pdfFile);
+      }
+    });
   } catch {
-    // ignore
+    // ignore if webview API unavailable
   }
 }
 
 handleCliArgs();
-checkArgv();
+setupDragDrop();
 
 // Update zoom display on load
 zoomLevel.textContent = `${Math.round(scale * 100)}%`;
