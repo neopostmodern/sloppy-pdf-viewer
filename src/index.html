@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Viewer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toolbar">
+    <button id="open-btn" title="Open PDF (Ctrl+O)">Open</button>
+    <div class="separator"></div>
+    <button id="prev-btn" title="Previous page (←)">&#9664;</button>
+    <span id="page-info">
+      <input id="page-input" type="number" min="1" value="1">
+      / <span id="page-count">0</span>
+    </span>
+    <button id="next-btn" title="Next page (→)">&#9654;</button>
+    <div class="separator"></div>
+    <button id="zoom-out-btn" title="Zoom out (-)">−</button>
+    <span id="zoom-level">100%</span>
+    <button id="zoom-in-btn" title="Zoom in (+)">+</button>
+    <button id="zoom-fit-btn" title="Fit to width">Fit</button>
+    <div class="spacer"></div>
+    <span id="filename"></span>
+  </div>
+  <div id="viewer">
+    <div id="canvas-container">
+      <canvas id="pdf-canvas"></canvas>
+    </div>
+    <div id="drop-hint">Open a PDF to get started<br><small>Ctrl+O or drag &amp; drop</small></div>
+  </div>
+  <script src="pdfjs/pdf.min.mjs" type="module"></script>
+  <script src="main.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #16213e;
+  border-bottom: 1px solid #0f3460;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+#toolbar button {
+  background: #0f3460;
+  color: #e0e0e0;
+  border: 1px solid #1a1a5e;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#toolbar button:hover {
+  background: #1a4a8a;
+}
+
+#toolbar button:active {
+  background: #0a2540;
+}
+
+.separator {
+  width: 1px;
+  height: 20px;
+  background: #0f3460;
+  margin: 0 4px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+#page-info {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#page-input {
+  width: 48px;
+  text-align: center;
+  background: #0f3460;
+  color: #e0e0e0;
+  border: 1px solid #1a1a5e;
+  border-radius: 4px;
+  padding: 3px;
+  font-size: 13px;
+  -moz-appearance: textfield;
+}
+
+#page-input::-webkit-inner-spin-button,
+#page-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+#zoom-level {
+  font-size: 13px;
+  min-width: 44px;
+  text-align: center;
+}
+
+#filename {
+  font-size: 12px;
+  color: #8899aa;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+#viewer {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+#canvas-container {
+  padding: 20px;
+  display: none;
+}
+
+#pdf-canvas {
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  background: white;
+}
+
+#drop-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 20px;
+  color: #556;
+  line-height: 1.6;
+}
+
+#drop-hint small {
+  font-size: 14px;
+  color: #445;
+}
