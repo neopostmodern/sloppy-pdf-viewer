@@ -6,12 +6,17 @@
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
-    "copy-pdfjs": "mkdir -p src/pdfjs && cp node_modules/pdfjs-dist/build/pdf.min.mjs node_modules/pdfjs-dist/build/pdf.worker.min.mjs src/pdfjs/"
+    "copy-pdfjs": "mkdir -p src/pdfjs && cp node_modules/pdfjs-dist/build/pdf.min.mjs node_modules/pdfjs-dist/build/pdf.worker.min.mjs node_modules/pdfjs-dist/web/pdf_viewer.mjs node_modules/pdfjs-dist/web/pdf_viewer.css src/pdfjs/",
+    "test": "npx playwright test",
+    "test:gen-fixtures": "node tests/generate-fixtures.js"
   },
   "dependencies": {
     "pdfjs-dist": "^4.10.38"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2"
+    "@playwright/test": "^1.50.0",
+    "@tauri-apps/cli": "^2",
+    "http-server": "^14.1.1",
+    "pdf-lib": "^1.17.1"
   }
 }
