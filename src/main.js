@@ -78,7 +78,7 @@ async function openPdf(filePath) {
   pageNumberInput.max = pdfDocument.numPages;
 
   const name = filePath.split("/").pop().split("\\").pop();
-  document.title = `${name} — PDF Viewer`;
+  document.title = `${name} — Sloppy PDF Viewer`;
 
   buildThumbnails();
   buildOutline();

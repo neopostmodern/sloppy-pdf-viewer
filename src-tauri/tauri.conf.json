@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicedoc/tauri-schema/main/schema.json",
-  "productName": "PDF Viewer",
+  "productName": "Sloppy PDF Viewer",
   "version": "0.1.0",
-  "identifier": "com.pdfviewer.desktop",
+  "identifier": "com.neopostmodern.sloppy-pdf-viewer.desktop",
   "build": {
     "frontendDist": "../src",
     "beforeDevCommand": "npm run copy-pdfjs",
@@ -12,7 +12,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "PDF Viewer",
+        "title": "Sloppy PDF Viewer",
         "width": 900,
         "height": 700,
         "minWidth": 400,

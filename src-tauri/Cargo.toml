@@ -1,10 +1,10 @@
 [package]
-name = "pdf-js-app"
+name = "sloppy-pdf-viewer"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "pdf_js_app_lib"
+name = "sloppy_pdf_viewer_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
