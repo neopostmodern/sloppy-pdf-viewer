@@ -9,20 +9,20 @@ test.describe('sidebar with simple PDF', () => {
   });
 
   test('sidebar toggle shows and hides sidebar', async ({ page }) => {
-    // Sidebar starts hidden
-    await expect(page.locator('#sidebar')).toHaveClass(/hidden/);
+    // Sidebar starts hidden (not in DOM)
+    await expect(page.locator('[data-testid="sidebar"]')).not.toBeVisible();
 
     // Toggle open
-    await page.click('#sidebarToggle');
-    await expect(page.locator('#sidebar')).not.toHaveClass(/hidden/);
+    await page.click('[data-testid="sidebarToggle"]');
+    await expect(page.locator('[data-testid="sidebar"]')).toBeVisible();
 
     // Toggle closed
-    await page.click('#sidebarToggle');
-    await expect(page.locator('#sidebar')).toHaveClass(/hidden/);
+    await page.click('[data-testid="sidebarToggle"]');
+    await expect(page.locator('[data-testid="sidebar"]')).not.toBeVisible();
   });
 
   test('thumbnails tab shows correct number of thumbnails', async ({ page }) => {
-    await page.click('#sidebarToggle');
+    await page.click('[data-testid="sidebarToggle"]');
     // Wait for thumbnails to render
     await page.waitForTimeout(1000);
 
@@ -31,7 +31,7 @@ test.describe('sidebar with simple PDF', () => {
   });
 
   test('click thumbnail navigates to that page', async ({ page }) => {
-    await page.click('#sidebarToggle');
+    await page.click('[data-testid="sidebarToggle"]');
     await page.waitForTimeout(1000);
 
     // Click the third thumbnail
@@ -41,8 +41,8 @@ test.describe('sidebar with simple PDF', () => {
   });
 
   test('no outline available shown for PDF without outline', async ({ page }) => {
-    await page.click('#sidebarToggle');
-    await page.click('#tabOutline');
+    await page.click('[data-testid="sidebarToggle"]');
+    await page.click('[data-testid="tabOutline"]');
 
     await expect(page.locator('.outline-empty')).toHaveText('No outline available');
   });
@@ -56,8 +56,8 @@ test.describe('sidebar with outline PDF', () => {
   });
 
   test('outline tab shows outline items', async ({ page }) => {
-    await page.click('#sidebarToggle');
-    await page.click('#tabOutline');
+    await page.click('[data-testid="sidebarToggle"]');
+    await page.click('[data-testid="tabOutline"]');
     await page.waitForTimeout(500);
 
     const items = page.locator('.outline-item');
@@ -68,8 +68,8 @@ test.describe('sidebar with outline PDF', () => {
   });
 
   test('click outline item navigates to correct page', async ({ page }) => {
-    await page.click('#sidebarToggle');
-    await page.click('#tabOutline');
+    await page.click('[data-testid="sidebarToggle"]');
+    await page.click('[data-testid="tabOutline"]');
     await page.waitForTimeout(500);
 
     await page.locator('.outline-item', { hasText: 'Chapter 3' }).click();

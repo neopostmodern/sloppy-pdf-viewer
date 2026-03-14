@@ -75,7 +75,7 @@ export async function injectTauriMock(page, fixturePath) {
  * @param {import('@playwright/test').Page} page
  */
 export async function openPdfViaDialog(page) {
-  await page.click('#openFile');
+  await page.click('[data-testid="openFile"]');
   // Wait for pdf.js to render at least one page
   await page.waitForSelector('.pdfViewer .page[data-page-number="1"]', { timeout: 10000 });
   // Give pdf.js a moment to update the toolbar

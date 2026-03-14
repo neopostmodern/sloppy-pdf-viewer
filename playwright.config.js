@@ -17,7 +17,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx http-server src/ -p 8081 -c-1 --silent',
+    command: 'npx vite --port 8081',
     port: 8081,
     reuseExistingServer: !process.env.CI,
   },

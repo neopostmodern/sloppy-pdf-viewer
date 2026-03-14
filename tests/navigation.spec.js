@@ -12,14 +12,14 @@ test('page count shows 3 after opening', async ({ page }) => {
 });
 
 test('click next navigates to page 2', async ({ page }) => {
-  await page.click('#next');
+  await page.click('[data-testid="next"]');
   await expect(page.locator('#pageNumber')).toHaveValue('2');
 });
 
 test('click previous goes back to page 1', async ({ page }) => {
-  await page.click('#next');
+  await page.click('[data-testid="next"]');
   await expect(page.locator('#pageNumber')).toHaveValue('2');
-  await page.click('#previous');
+  await page.click('[data-testid="previous"]');
   await expect(page.locator('#pageNumber')).toHaveValue('1');
 });
 
@@ -38,13 +38,13 @@ test('first page button navigates to page 1', async ({ page }) => {
   await expect(input).toHaveValue('3');
 
   // Open secondary toolbar and click first page
-  await page.click('#secondaryToolbarToggle');
-  await page.click('#firstPage');
+  await page.click('[data-testid="secondaryToolbarToggle"]');
+  await page.click('[data-testid="firstPage"]');
   await expect(input).toHaveValue('1');
 });
 
 test('last page button navigates to last page', async ({ page }) => {
-  await page.click('#secondaryToolbarToggle');
-  await page.click('#lastPage');
+  await page.click('[data-testid="secondaryToolbarToggle"]');
+  await page.click('[data-testid="lastPage"]');
   await expect(page.locator('#pageNumber')).toHaveValue('3');
 });

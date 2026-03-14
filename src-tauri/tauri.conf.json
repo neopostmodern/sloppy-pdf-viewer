@@ -4,9 +4,10 @@
   "version": "0.1.0",
   "identifier": "com.neopostmodern.sloppy-pdf-viewer.desktop",
   "build": {
-    "frontendDist": "../src",
-    "beforeDevCommand": "npm run copy-pdfjs",
-    "beforeBuildCommand": "npm run copy-pdfjs"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run copy-pdfjs-worker && npm run dev",
+    "beforeBuildCommand": "npm run copy-pdfjs-worker && npm run build"
   },
   "app": {
     "withGlobalTauri": true,

@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 
 test('Ctrl+F opens find bar', async ({ page }) => {
   await page.keyboard.press('Control+f');
-  await expect(page.locator('#findbar')).not.toHaveClass(/hidden/);
+  await expect(page.locator('[data-testid="findbar"]')).toBeVisible();
 });
 
 test('Ctrl+O calls dialog.open', async ({ page }) => {
@@ -30,35 +30,46 @@ test('Ctrl+S calls dialog.save', async ({ page }) => {
 });
 
 test('Ctrl+= zooms in', async ({ page }) => {
-  await page.selectOption('#scaleSelect', '1');
+  // Set a known starting zoom via MUI select
+  await page.locator('[data-testid="scaleSelect"] [role="combobox"]').click();
+  await page.click('[role="option"][data-value="1"]');
   await page.waitForTimeout(300);
+  await page.locator('body').click();
 
   await page.keyboard.press('Control+=');
   await page.waitForTimeout(300);
 
-  const value = await page.locator('#scaleSelect').inputValue();
-  expect(value === 'custom' || parseFloat(value) > 1).toBeTruthy();
+  const text = await page.locator('[data-testid="scaleSelect"] [role="combobox"]').textContent();
+  // Should no longer say "100%"
+  expect(text).toBeTruthy();
+  expect(text).not.toBe('100%');
 });
 
 test('Ctrl+- zooms out', async ({ page }) => {
-  await page.selectOption('#scaleSelect', '2');
+  await page.locator('[data-testid="scaleSelect"] [role="combobox"]').click();
+  await page.click('[role="option"][data-value="2"]');
   await page.waitForTimeout(300);
+  await page.locator('body').click();
 
   await page.keyboard.press('Control+-');
   await page.waitForTimeout(300);
 
-  const value = await page.locator('#scaleSelect').inputValue();
-  expect(value === 'custom' || parseFloat(value) < 2).toBeTruthy();
+  const text = await page.locator('[data-testid="scaleSelect"] [role="combobox"]').textContent();
+  expect(text).toBeTruthy();
+  expect(text).not.toBe('200%');
 });
 
 test('Ctrl+0 resets zoom to auto', async ({ page }) => {
-  await page.selectOption('#scaleSelect', '2');
+  await page.locator('[data-testid="scaleSelect"] [role="combobox"]').click();
+  await page.click('[role="option"][data-value="2"]');
   await page.waitForTimeout(300);
+  await page.locator('body').click();
 
   await page.keyboard.press('Control+0');
   await page.waitForTimeout(300);
 
-  await expect(page.locator('#scaleSelect')).toHaveValue('auto');
+  const text = await page.locator('[data-testid="scaleSelect"] [role="combobox"]').textContent();
+  expect(text).toContain('Automatic Zoom');
 });
 
 test('Home navigates to first page', async ({ page }) => {
@@ -120,27 +131,27 @@ test('k/p navigates to previous page', async ({ page }) => {
 
 test('Escape closes find bar', async ({ page }) => {
   await page.keyboard.press('Control+f');
-  await expect(page.locator('#findbar')).not.toHaveClass(/hidden/);
+  await expect(page.locator('[data-testid="findbar"]')).toBeVisible();
 
   await page.keyboard.press('Escape');
-  await expect(page.locator('#findbar')).toHaveClass(/hidden/);
+  await expect(page.locator('[data-testid="findbar"]')).not.toBeVisible();
 });
 
 test('Escape closes properties dialog', async ({ page }) => {
   // Open properties
-  await page.click('#secondaryToolbarToggle');
-  await page.click('#documentProperties');
+  await page.click('[data-testid="secondaryToolbarToggle"]');
+  await page.click('[data-testid="documentProperties"]');
   await page.waitForTimeout(300);
-  await expect(page.locator('#propertiesOverlay')).not.toHaveClass(/hidden/);
+  await expect(page.locator('[role="dialog"]')).toBeVisible();
 
   await page.keyboard.press('Escape');
-  await expect(page.locator('#propertiesOverlay')).toHaveClass(/hidden/);
+  await expect(page.locator('[role="dialog"]')).not.toBeVisible();
 });
 
 test('Escape closes secondary toolbar', async ({ page }) => {
-  await page.click('#secondaryToolbarToggle');
-  await expect(page.locator('#secondaryToolbar')).not.toHaveClass(/hidden/);
+  await page.click('[data-testid="secondaryToolbarToggle"]');
+  await expect(page.locator('#secondaryToolbar')).toBeVisible();
 
   await page.keyboard.press('Escape');
-  await expect(page.locator('#secondaryToolbar')).toHaveClass(/hidden/);
+  await expect(page.locator('#secondaryToolbar')).not.toBeVisible();
 });

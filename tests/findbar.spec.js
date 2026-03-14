@@ -8,16 +8,16 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('Ctrl+F opens find bar, Escape closes it', async ({ page }) => {
-  // Find bar starts hidden
-  await expect(page.locator('#findbar')).toHaveClass(/hidden/);
+  // Find bar starts hidden (not in DOM)
+  await expect(page.locator('[data-testid="findbar"]')).not.toBeVisible();
 
   // Ctrl+F opens it
   await page.keyboard.press('Control+f');
-  await expect(page.locator('#findbar')).not.toHaveClass(/hidden/);
+  await expect(page.locator('[data-testid="findbar"]')).toBeVisible();
 
   // Escape closes it
   await page.keyboard.press('Escape');
-  await expect(page.locator('#findbar')).toHaveClass(/hidden/);
+  await expect(page.locator('[data-testid="findbar"]')).not.toBeVisible();
 });
 
 test('typing a query shows result count', async ({ page }) => {
@@ -38,7 +38,7 @@ test('next/prev match changes current count', async ({ page }) => {
   await expect(page.locator('#findResultsCount')).not.toHaveText('', { timeout: 5000 });
   const initial = await page.locator('#findResultsCount').textContent();
 
-  await page.click('#findNext');
+  await page.click('[data-testid="findNext"]');
   await page.waitForTimeout(300);
   const afterNext = await page.locator('#findResultsCount').textContent();
 
@@ -87,9 +87,9 @@ test('not found message for non-existent query', async ({ page }) => {
 });
 
 test('close button closes find bar', async ({ page }) => {
-  await page.click('#viewFind');
-  await expect(page.locator('#findbar')).not.toHaveClass(/hidden/);
+  await page.click('[data-testid="viewFind"]');
+  await expect(page.locator('[data-testid="findbar"]')).toBeVisible();
 
-  await page.click('#findClose');
-  await expect(page.locator('#findbar')).toHaveClass(/hidden/);
+  await page.click('[data-testid="findClose"]');
+  await expect(page.locator('[data-testid="findbar"]')).not.toBeVisible();
 });
