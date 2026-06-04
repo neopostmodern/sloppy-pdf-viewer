@@ -15,6 +15,11 @@ html, body, #root {
 
 /* Override pdf_viewer.css defaults for dark theme */
 .pdfViewer .page {
+  --page-border: none;
   margin: 8px auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pdfViewer .spread {
+  --spreadHorizontalWrapped-margin-LR: 8px;
 }

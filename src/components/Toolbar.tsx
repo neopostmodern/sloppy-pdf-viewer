@@ -36,7 +36,9 @@ export default function Toolbar() {
     zoomOut,
     setScale,
     toggleFindbar,
+    findbarOpen,
     toggleSidebar,
+    sidebarOpen,
     openFileDialog,
     saveFile,
     secondaryToolbarOpen,
@@ -44,29 +46,38 @@ export default function Toolbar() {
   } = usePdf();
 
   const [pageInputValue, setPageInputValue] = useState("");
+  const [pageInputFocused, setPageInputFocused] = useState(false);
   const pageInputRef = useRef<HTMLInputElement>(null);
   const toolsButtonRef = useRef<HTMLButtonElement>(null);
 
   // Sync page input display with current page from context
-  const displayValue = pageInputValue !== "" ? pageInputValue : String(currentPage);
+  const displayValue = pageInputFocused ? pageInputValue : String(currentPage);
 
   const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPageInputValue(e.target.value);
   };
 
+  const handlePageInputFocus = () => {
+    setPageInputValue(String(currentPage));
+    setPageInputFocused(true);
+    pageInputRef.current?.select();
+  };
+
   const handlePageInputKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      const num = parseInt(pageInputValue || displayValue, 10);
+      const num = parseInt(pageInputValue, 10);
       if (num >= 1 && num <= numPages) {
         goToPage(num);
       }
       setPageInputValue("");
+      setPageInputFocused(false);
       (e.target as HTMLInputElement).blur();
     }
   };
 
   const handlePageInputBlur = () => {
     setPageInputValue("");
+    setPageInputFocused(false);
   };
 
   const handleScaleChange = (e: SelectChangeEvent<string>) => {
@@ -100,6 +111,7 @@ export default function Toolbar() {
             onClick={toggleSidebar}
             data-testid="sidebarToggle"
             title="Toggle Sidebar"
+            sx={sidebarOpen ? { bgcolor: "rgba(255,255,255,0.1)", borderRadius: 1 } : undefined}
           >
             <MenuIcon fontSize="small" />
           </IconButton>
@@ -111,6 +123,7 @@ export default function Toolbar() {
             onClick={() => toggleFindbar()}
             data-testid="viewFind"
             title="Find in Document (Ctrl+F)"
+            sx={findbarOpen ? { bgcolor: "rgba(255,255,255,0.1)", borderRadius: 1 } : undefined}
           >
             <SearchIcon fontSize="small" />
           </IconButton>
@@ -132,6 +145,7 @@ export default function Toolbar() {
               data-testid="pageNumber"
               value={displayValue}
               onChange={handlePageInputChange}
+              onFocus={handlePageInputFocus}
               onKeyDown={handlePageInputKeyDown}
               onBlur={handlePageInputBlur}
               size="small"

@@ -138,7 +138,7 @@ export function PdfProvider({ children }: { children: React.ReactNode }) {
   const findOptionsRef = useRef<FindOptions>({
     caseSensitive: false,
     entireWord: false,
-    highlightAll: false,
+    highlightAll: true,
     matchDiacritics: false,
   });
   const findQueryRef = useRef<string>("");

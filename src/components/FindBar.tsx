@@ -44,9 +44,9 @@ export default function FindBar() {
     if (e.key === "Enter") {
       e.preventDefault();
       if (e.shiftKey) {
-        dispatchFind("findagain", true);
+        dispatchFind("again", true);
       } else {
-        dispatchFind("findagain");
+        dispatchFind("again");
       }
     } else if (e.key === "Escape") {
       toggleFindbar(false);
@@ -56,7 +56,7 @@ export default function FindBar() {
   const handleOptionChange = (key: keyof typeof findOptionsRef.current) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
       findOptionsRef.current[key] = e.target.checked;
-      if (findQueryRef.current) dispatchFind("findagain");
+      if (findQueryRef.current) dispatchFind();
     };
   };
 
@@ -98,7 +98,7 @@ export default function FindBar() {
 
       <IconButton
         size="small"
-        onClick={() => dispatchFind("findagain", true)}
+        onClick={() => dispatchFind("again", true)}
         data-testid="findPrevious"
         title="Previous Match (Shift+Enter)"
       >
@@ -107,7 +107,7 @@ export default function FindBar() {
 
       <IconButton
         size="small"
-        onClick={() => dispatchFind("findagain")}
+        onClick={() => dispatchFind("again")}
         data-testid="findNext"
         title="Next Match (Enter)"
       >
@@ -122,6 +122,7 @@ export default function FindBar() {
             size="small"
             data-testid="findHighlightAll"
             id="findHighlightAll"
+            defaultChecked
             onChange={handleOptionChange("highlightAll")}
             sx={{ p: 0.25, color: "#b0b0b0", "&.Mui-checked": { color: "#0078d7" } }}
           />
